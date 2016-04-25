@@ -1,0 +1,41 @@
+<div class="container">
+	<h1>Welcome, {{ user.name }}</h1>
+	<input type="text" name="filter_topics" ng-model="filter_input">
+	<button class="btn btn-sm btn-primary" name="search">search topics</button>
+	<table class="table table-hover table-bordered">
+		<thead>
+			<th>Category</th>
+			<th>Topic</th>
+			<th>Created By</th>
+			<th>Posts</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="topic in topics | filter: {topic: filter_input}">
+				<td>{{ topic.category }}</td>
+				<td><a href="#/topic/{{topic._id}}">{{ topic.title }}</a></td>
+				<td>{{ topic._user.name }}</td>
+				<td>{{ topic._postings.length }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<h3>Add a New Topic</h3>
+	<div class="Topic">
+		<label for="newTopic">Topic:</label>
+		<br>
+		<input type="text" name="newTopic" ng-model="new_topic.title">
+		<br>
+		<label for="newDesc">Description:</label>
+		<br>
+		<textarea name="newDesc" rows="8" cols="19" ng-model="new_topic.description"></textarea>
+		<br>
+		<label for="newCat">Category:</label>
+		<br>
+		<select name="newCat" ng-model="new_topic.category">
+			<option ng-repeat="category in categories">{{ category }}</option>
+		</select>
+		<br><br>
+		<input class="btn btn-primary" type="submit" ng-click="addTopic(new_topic)" value="submit">
+		<br>
+		<br>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<div class="container">
+	<p>You are logged in as {{ user.name }}</p>
+	<a class="pull-right" href="#/dashboard">dashboard</a>
+	<br><br>
+	<a class="pull-right" href="#/logout">log out</a>
+
+	<h4><a href="#/user/{{ topic._user._id }}" ng-click="getUserById(topic._user._id)">{{ topic._user.name }}</a> posted a topic:</h4>
+	<h3>{{ topic.title }}</h3>
+	<h5>description: {{ topic.description }}</h5>
+	<h5>category: {{ topic.category }}</h5>
+	<div class="newpost">
+		<h5>Post your answer here:</h5>
+		<textarea name="newPost" rows="4" cols="100" ng-model="new_post.message"></textarea>
+		<input type="button" class="btn btn-primary" ng-click="addPost(new_post)" value="Post">
+	</div>
+	<hr>
+<!-- {{	postings}} -->
+	<!-- postings: {{postings}} -->
+	<!-- posts: {{topic._postings.message}} -->
+	<div class="posts" ng-repeat="post in postings | orderBy:['-likes', 'createdAt']" >
+		<h4> {{ post._user.name }}: {{ post.message }} </h4><br><h4><h4 ng-if="post.likes > 0">+</h4>{{post.likes}}</h4>
+		<button type="button" class="btn btn-sm btn-success" name="like" ng-click="addLike(post._id)">like</button>
+		<button type="button" class="btn btn-sm btn-warning" name="dislike" ng-click="downVote(post._id)">dislike</button>
+		<br><br>
+		<!-- {{post._comments}} -->
+		<div class="comments" ng-repeat="comment in post._comments">
+				<p>
+					{{comment._user.name}}: {{comment.comment}}
+				</p>
+		</div>
+		<form>
+			<textarea name = 'comment' rows="2" cols="60" ng-model="new_comment.comment"></textarea>
+			<button class="btn btn-primary" ng-click="addComment(new_comment, post._id)" >comment</button>
+		</form>
+	</div>
+</div>
